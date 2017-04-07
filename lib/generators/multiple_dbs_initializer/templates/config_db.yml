@@ -1,0 +1,24 @@
+
+development:
+  adapter: #development_adapter
+  encoding: #development_encoding
+  pool: #development_pool
+  database: #development_database
+  password: #development_psw
+  username: #development_username
+
+production:
+  adapter: #production_adapter
+  encoding: #production_encoding
+  pool: #production_pool
+  database: #production_database
+  username: #production_username
+  password: #production_psw
+
+test:
+  adapter: #test_adapter
+  encoding: #test_encoding
+  pool: #test_pool
+  database: #test_database
+  username: #test_username
+  password: #test_psw
