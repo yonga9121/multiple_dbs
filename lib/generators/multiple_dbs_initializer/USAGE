@@ -1,6 +1,6 @@
 Description:
-    Explain the generator
-
+    You must use this generator to start using the gem multiple_dbs.
+    It creates the files needed to work with your databases.
 Example:
     rails generate multiple_dbs Thing
 

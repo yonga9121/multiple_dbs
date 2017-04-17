@@ -4,8 +4,8 @@ development:
   encoding: unicode #development_encoding
   pool: 5 #development_pool
   database: db1_development #development_database
-  password: toor #development_psw
-  username: root #development_username
+  password: fs20161pw #development_psw
+  username: fs20161 #development_username
 
 production:
   adapter: postgresql #production_adapter
@@ -20,5 +20,5 @@ test:
   encoding: unicode #test_encoding
   pool: 5 #test_pool
   database: db1_test #test_database
-  username: root #test_username
-  password: toor #test_psw
+  username: fs20161 #test_username
+  password: fs20161pw #test_psw

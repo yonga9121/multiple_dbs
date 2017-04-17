@@ -1,5 +1,7 @@
 require "multiple_dbs/railtie"
-module MultipleDbs
-  # Your code goes here...
+require "multiple_dbs/multi_connectable"
 
+## MultipleDbs
+#  The MultipleDbs module.
+module MultipleDbs
 end
