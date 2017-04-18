@@ -62,8 +62,12 @@ module MultipleDbs
       #   end
       # end
       #
-      def make_connectable_class(&block)
-        MultipleDbs::DBS.each do |db|
+      def make_connectable_class(options = {},&block)
+        only = options[:only]
+        only = only.delete_if{ |o| !MultipleDbs::DBS.include?(o) } if only and only.any?
+        database_list = (MultipleDbs::DBS & only) if only and only.any?
+        database_list ||=  MultipleDbs::DBS
+        database_list.each do |db|
           class_eval do
             Object.const_set("#{self.name}#{db.capitalize}", Class.new(self) do
               class_eval do
@@ -137,7 +141,7 @@ module MultipleDbs
             )
             Object.const_get("#{self.name}#{db.capitalize}").muliple_relations
           end
-        end
+        end if database_list.any?
       end
     end
   end

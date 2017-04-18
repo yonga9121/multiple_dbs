@@ -1,8 +1,14 @@
 Description:
-    Explain the generator
+    Generate the migrations like the migration generator from rails but
+    create the files in the multiple_dbs databases.
+
+    You can use it as you usually use the rails migration generator
+
+    You can use the options:
+    --only and pass the name of the databases space separated. This only create
+           the migration in the specified databases
+    --skip and pass the name of the databases space separated. This not create
+           the migration in the specified databases
 
 Example:
-    rails generate multiple_dbs Thing
-
-    This will create:
-        what/will/it/create
+    rails g multiple_dbs_migration add_password_to_users password:string --only=db1 db3 --skip=db3
