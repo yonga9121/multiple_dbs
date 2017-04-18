@@ -51,7 +51,7 @@ class MultipleDbsInitializerGenerator < Rails::Generators::Base
       end)
     end\n},
     after: "# DbConnection Constants.\n", verbose: false
-    remove_file "config/multiple_dbs"
+    remove_file "config/multiple_dbs", verbose: false
     databases.each do |db|
       create_database_config_file db
     end
@@ -67,7 +67,7 @@ class MultipleDbsInitializerGenerator < Rails::Generators::Base
   #  Overwritten
   def create_database_config_file(db = nil)
     fpath = db ? "/multiple_dbs/#{db}_database.yml" : "/database.yml"
-    db ||= MultipleDbs::DBS.first
+    db ||= databases.first
     copy_file "config_db.yml", "config#{fpath}"
 
     insert_into_file "config#{fpath}",

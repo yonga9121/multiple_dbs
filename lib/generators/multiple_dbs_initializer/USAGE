@@ -1,8 +1,23 @@
 Description:
-    You must use this generator to start using the gem multiple_dbs.
+    You must use this generator to start using the multiple_dbs gem .
     It creates the files needed to work with your databases.
-Example:
-    rails generate multiple_dbs Thing
+      Those files are:
+      - An initializer that define a constant with the databases names that you
+        give as an argument and the constants that store the databases configuration.
+      - the DBNAME_database.yml configuration files for each one of the databases.
+      - the database.yml. This file is needed by rails as default.
+    You can pass as options the configuration for each environment
+    (development, production, test).
 
-    This will create:
-        what/will/it/create
+Example:
+    rails generate multiple_dbs_initializer your_database your_database2 your_database3
+
+    This will create and override if exist the following files:
+        config/initializers/multiple_dbs_initializer.rb
+        config/multiple_dbs/your_database_database.yml
+        config/multiple_dbs/your_database2_database.yml
+        config/multiple_dbs/your_database3_database.yml
+        config/database.yml
+
+Example with Options:
+    rails generate multiple_dbs_initializer your_database your_database2 your_database3 --development=username:super password:cool --test=adapter:mysql2 pool:2 --production=username:imsecure

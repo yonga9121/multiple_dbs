@@ -1,6 +1,6 @@
 module MultipleDbs
   # Your databases.
-	DBS=[:mydb1, :mydb2]
+	DBS=[:your_database, :your_database2, :your_database3]
 
   module DbConnection
     # DbConnection Constants.
