@@ -1,68 +1,67 @@
 # MultipleDbs
-So your rails application needs to handle n databases, well my friend
-this is your solution. This gem allow you to handle all your databases
+So, your rails application needs to handle n databases. Well my friend,
+this is your solution. This gem allows you to handle all your databases
 connections, either for different databases that share the same entity
 relationship model or for different databases with different entity
 relationship models.
 
 ## Usage
 
-multiple_dbs create a subclass for the models you want to handle in multiple
-databases, one subclass for each connection. By doing this, each connection is
-handle by a subclass and do not have to switch between connections adding that the
-cost of remove and establish connections.
+multiple_dbs creates a subclass for the models you want to handle in multiple
+databases and one subclass for each connection. By doing this, each connection is
+handled by it's own subclass, preventing switching between connections, which add a high computational cost.
 
 #### IMPORTANT.
-The following examples assume that you define 3 databases: db1, db2 and db3
+The following examples assume that you define 3 databases: db1, db2 and db3.
 
-Please read all the document, specially if your project is already running or
+Please read all this document, especially if your project is already running or
 already has a database with migrations and stuff.
 
 ### Generate models.
 
-If you want to generate a model for all the databases
+If you want to generate a model for all the databases, run
 ```bash
 $ rails g multiple_dbs_model user email:string
 ```
 
-If you want to generate a model for a specific databases
+If you want to generate a model for a specific databases, run
 ```bash
 $ rails g multiple_dbs_model user email:string --only=db1 db3
 ```
 
-If you want to generate a model skipping a specific databases
+If you want to generate a model skipping a specific databases, run
 ```bash
 $ rails g multiple_dbs_model user email:string --skip=db1 db3
 ```
 
-You will find all the migrations in the folder db/your_database/migrate.
+You will find all migrations in the folder db/your_database/migrate.
 The schema and seed files can be found in the folder db/your_database.
 
 #### NOTE:
 If you already have models, migrations and a schema file, and want to manage that
 initial database with the multiple_dbs gem (recommended), you should create the database using
-the multiple_dbs_initializer generator and pass as an that database name.
+the multiple_dbs_initializer generator and pass said database name as an argument. Check the install section for more information.
 
 Finally copy the db/migration folder, schema and seed files to the
-db/your_default_db folder and use the --skip and --only options in the right way.
+db/your_default_db folder and use the --skip and --only options. These options are explained in the install section.
 
-If you DO NOT want to override the default database.yml file pass the option
+If you DO NOT want to override the default database.yml file, add as an option
 --not_override=true
 
 
 ### Generate Migrations
 
-If you want to generate a migration for all the databases
+If you want to generate a migration for all the databases, run
 ```bash
 $ rails g multiple_dbs_migration add_column_password_to_users password:string
 ```
 
-If you want to a generate migration for specific database
+If you want to a generate migration for a specific database, run
 ```bash
 $ rails g multiple_dbs_migration add_column_password_to_users password:string --only=db1 db3
 ```
 
-If you want to generate a migration skipping a specific database
+If you want to generate a migration skipping a specific database, run
 ```bash
 $ rails g multiple_dbs_migration add_column_password_to_users password:string --skip=db1 db2
 ```
@@ -70,19 +69,19 @@ $ rails g multiple_dbs_migration add_column_password_to_users password:string --
 #### NOTE:
 If you already have models, migrations and a schema file, and want to manage that
 initial database with the multiple_dbs gem (recommended), you should create the database using
-the multiple_dbs_initializer generator and pass as an that database name.
+the multiple_dbs_initializer generator and pass said database name as an argument. Check the install section for more information.
 
 Finally copy the db/migration folder, schema and seed files to the
-db/your_default_db folder and use the --skip and --only options in the right way.
+db/your_default_db folder and use the --skip and --only options. These options are explained in the install section.
 
-If you DO NOT want to override the default database.yml file pass the option
+If you DO NOT want to override the default database.yml file, add as an option
 --not_override=true
 
 ### Setting up your models
 
-Assuming that you create a User model and it has many Post
+Assuming that you create a User model and it has many Posts.
 
-In the User model.
+The User model should look like this:
 ```ruby
 # app/models/user.rb
 class User < ApplicationRecord
@@ -101,7 +100,9 @@ end
 You are defining a UserDb1, UserDb2 and UserDb3 classes with a has_many posts
 relation for PostDb1, PostDb2 and PostDb3 respectively.
 
-In case you don't need the association through all the databases just with the
+
+--------------------------------------------------------------------------------
+In case you don't need the association through all the databases, for example, the
 database db1
 
 ```ruby
