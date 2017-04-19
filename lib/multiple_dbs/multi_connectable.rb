@@ -1,4 +1,3 @@
-
 # If running in development mode, rails use Kernel#load to load our code.
 # Is good, it allows us to make changes in files and see the changes in our
 # server/console instantly but the subclasses that we create for each one of
@@ -21,7 +20,7 @@ Object.class_eval do
     return const_temp if matches.any? and const_temp.to_s.eql?(c.to_s)
     super
   end
-end if Rails.env.development?
+end if Rails.env.development? and defined? MultipleDbs and defined? MultipleDbs::DBS
 
 
 module MultipleDbs
