@@ -81,7 +81,7 @@ If you DO NOT want to override the default database.yml file, add as an option
 
 Assuming that you create a User model and it has many Posts.
 
-The User model should look like this:
+The User and Post models should look like this:
 ```ruby
 # app/models/user.rb
 class User < ApplicationRecord
@@ -97,13 +97,10 @@ class Post < ApplicationRecord
   end
 end
 ```
-You are defining a UserDb1, UserDb2 and UserDb3 classes with a has_many posts
-relation for PostDb1, PostDb2 and PostDb3 respectively.
+Here, you associate the models between databases, by using classes PostDb1, PostDb2 and PostDb3 associated with classes UserDb1, UserDb2 and UserDb3 respectively.
 
-
---------------------------------------------------------------------------------
 In case you don't need the association through all the databases, for example, the
-database db1
+database db1, your models should look like this.
 
 ```ruby
 # app/models/user.rb
@@ -120,11 +117,9 @@ class Post < ApplicationRecord
   end
 end
 ```
+Here, you associate the models between databases, by using class PostDb1 associated with classes UserDb1, UserDb2 and UserDb3.
 
-You are defining a UserDb1, UserDb2 and UserDb3 classes with a has_many posts
-relation only with the PostDb1 class.
-
-In case you don't need to define a class for all your databases.
+In case you don't need to define a class for all your databases, your models should look like this.
 ```ruby
 # app/models/user.rb
 class User < ApplicationRecord
@@ -141,12 +136,11 @@ class Post < ApplicationRecord
 end
 ```
 
-You are defining a UserDb1 and UserDb3 classes with a has_many posts relation
-for PostDb1, PostDb2 and PostDb3
+Here, you associate the models between databases, by using classes PostDb1, PostDb2 and PostDb3 associated with classes UserDb1 and UserDb3.
 
 ### Using the subclasses
 
-You have two options for use a subclass that handle a connection.
+You have two options for using a subclass that handles a connection.
 
 - 1. Using the raw constant
 
@@ -163,8 +157,7 @@ You have two options for use a subclass that handle a connection.
     user_class = User.multiple_class(:db1)
     user_class.create(email: "someone@email.com")
   ```
-  This is useful if your client send you the database where must be stored
-  a record o run a transaction.
+  This is useful if your client sends you the database for data storage or transaction runs.
 
 
 ## Installation
@@ -194,8 +187,8 @@ Run in your terminal
 $ rails g multiple_dbs_initializer my_database1 my_database2
 ```
 
-If you need to configure the database conections, things like the adapter, username,
-etc, pass the options you want. Allowed options are: adapter,encoding,pool,username,password
+If you need to configure the database connections (adapter, username,
+etc), pass the options you want. Allowed options are: adapter,encoding,pool,username,password
 
 Run in your terminal
 ```bash
@@ -205,7 +198,7 @@ $ rails g multiple_dbs_initializer my_database1 my_database2
 --production=username:seriusname password:enviromentvariablepls pool:20
 ```
 
-Check the help for more information. Run in your terminal
+Run the help command for more information
 ```bash
 $ rails g multiple_dbs_initializer --help
 ```
@@ -213,7 +206,7 @@ $ rails g multiple_dbs_initializer --help
 ### Rails >= 5.x.x
 
 Add this line to your application_record.rb file so you ApplicationRecord class
-look like this.
+looks like this.
 ```ruby
 # app/models/application_record.rb
 class ApplicationRecord < ActiveRecord::Base
@@ -232,7 +225,7 @@ class ConnectionBase < ActiveRecord::Base
 end
 ```
 
-So in your models.
+And make your models inherit from that class.
 ```ruby
 # app/models/your_model.rb
 class YourModel < ConnectionBase
@@ -241,7 +234,7 @@ end
 ```
 
 ### Manage the databases
-multiple_dbs come with a list of useful tasks that you can find in your project
+multiple_dbs comes with a list of useful tasks that you can find in your project
 after the gem was installed.
 
 Run in your terminal
@@ -249,7 +242,7 @@ Run in your terminal
 $ rake --tasks
 ```
 
-You will found all the tasks under the namespace "mdbs"
+You will find all the tasks under the namespace "mdbs"
 
 To create all the databases.
 ```bash
@@ -281,17 +274,13 @@ To migrate a specific database.
 $ rails mdbs:your_database_name:migrate
 ```
 
-You can pass the standard rails options to the tasks.
+You can pass the standard rails options as arguments to the tasks.
 
-Please. Please! check the tasks under the namespace "mdbds"
+Please. Please! check the tasks under the namespace "mdbs"
 Run in your terminal
 ```bash
 $ rake --tasks
 ```
-
-
-## Contributing
-Contribution directions go here.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
