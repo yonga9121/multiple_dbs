@@ -41,9 +41,6 @@ The schema and seed files can be found in the folder db/your_database.
 If you already have models, migrations and a schema file, and want to manage that
 initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the "How to start if already have a database ?"  section for more information.
 
-Finally copy the db/migration folder, schema and seed files to the
-db/your_default_db folder and use the --skip and --only options. These options are explained in the install section.
-
 If you DO NOT want to override the default database.yml file, add as an option
 --not_override=true
 
@@ -67,11 +64,7 @@ $ rails g multiple_dbs_migration add_column_password_to_users password:string --
 
 #### NOTE:
 If you already have models, migrations and a schema file, and want to manage that
-initial database with the multiple_dbs gem (recommended), you should create the database using
-the multiple_dbs_initializer generator and pass said database name as an argument. Check the install section for more information.
-
-Finally copy the db/migration folder, schema and seed files to the
-db/your_default_db folder and use the --skip and --only options. These options are explained in the install section.
+initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the "How to start if already have a database ?"  section for more information.
 
 If you DO NOT want to override the default database.yml file, add as an option
 --not_override=true
