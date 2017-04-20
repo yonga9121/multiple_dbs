@@ -17,7 +17,7 @@ namespace :mdbs do
   # Looping all the databases
   @dbs.each do |db|
     desc "databases managment #{db} tasks"
-    # A namespace per database 
+    # A namespace per database
     namespace db.to_sym do |database|
       desc "#{db} drop"
       task :drop do
@@ -120,9 +120,49 @@ namespace :mdbs do
   desc "copy the specified migration to each dbs migrations folder. Parameters: full_path.rb, database_name"
   task :copy_migration, [:file_name, :db_name] do |t, args|
     @dbs.each do |db|
-      puts "Copy seed from db/#{args[:db_name].downcase}/migrate/#{args[:file_name]} to db/#{db}/migrate/#{args[:file_name]}."
+      puts "Copy migration from db/#{args[:db_name].downcase}/migrate/#{args[:file_name]} to db/#{db}/migrate/#{args[:file_name]}."
       puts system("cp db/#{args[:db_name].downcase}/migrate/#{args[:file_name]} db/#{db}/migrate/#{args[:file_name]} ")
     end
+  end
+
+  desc "copy the specified migration to the specified db migrations folder. Parameters: full_path.rb, from_database_name, to_database_name"
+  task :copy_migration_into, [:file_name, :from_database_name, :to_database_name] do |t, args|
+      puts "Copy migration from db/#{args[:from_database_name].downcase}/migrate/#{args[:file_name]} to db/#{args[:to_database_name]}/migrate/#{args[:file_name]}."
+      puts system("cp db/#{args[:from_database_name].downcase}/migrate/#{args[:file_name]} db/#{args[:to_database_name]}/migrate/#{args[:file_name]} ")
+  end
+
+  desc "copy the specified migration from the default migrations folder db/migrate to each dbs migrations folder. Parameters: full_path.rb"
+  task :copy_migration_from_default, [:file_name] do |t, args|
+    @dbs.each do |db|
+      puts "Copy migration from db/migrate/#{args[:file_name]} to db/#{db}/migrate/#{args[:file_name]}."
+      system(" mkdir db/#{db}")
+      system(" mkdir db/#{db}/migrate")
+      puts system("cp db/migrate/#{args[:file_name]} db/#{db}/migrate/#{args[:file_name]} ")
+    end
+  end
+
+  desc "copy the db/migration folder into each of your databases"
+  task :replicate_default_database do
+    @dbs.each do |db|
+      puts "Copy folder db/migrate to db/#{db}"
+      system(" mkdir db/#{db}")
+      puts system("cp -r db/migrate db/#{db}")
+    end
+  end
+
+  desc "copy the db/migration folder into the specified database"
+  task :replicate_default_database_into,[:db_name] do |t, args|
+      puts "Copy folder db/migrate to db/#{args[:db_name]}/migrate"
+      system(" mkdir db/#{args[:db_name]}")
+      puts system("cp -r db/migrate db/#{args[:db_name]}/migrate")
+  end
+
+  desc "copy the specified migration from the default migrations folder db/migrate, to the specified db migrations folder. Parameters: full_path.rb, to_database_name"
+  task :copy_migration_from_default_into, [:file_name, :to_database_name] do |t, args|
+      puts "Copy migration from db/migrate/#{args[:file_name]} to db/#{args[:to_database_name]}/migrate/#{args[:file_name]}."
+      system(" mkdir db/#{args[:to_database_name]}")
+      system(" mkdir db/#{args[:to_database_name]}/migrate")
+      puts system("cp db/migrate/#{args[:file_name]} db/#{args[:to_database_name]}/migrate/#{args[:file_name]} ")
   end
 
   desc "drop all dbs"

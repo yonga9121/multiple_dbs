@@ -29,7 +29,7 @@ class MultipleDbsInitializerGenerator < Rails::Generators::Base
   class_option :test, type: :hash, default: @@default_db_config
 
   ## not_override
-  # If true override the config/database.yml otherwise override it
+  # If false override the config/database.yml otherwise not override it
   class_option :not_override, type: :boolean, default: true
 
   ## define_multiple_dbs_constant
@@ -58,7 +58,7 @@ class MultipleDbsInitializerGenerator < Rails::Generators::Base
     databases.each do |db|
       create_database_config_file db
     end
-    create_database_config_file if options.not_override
+    create_database_config_file if !options.not_override
   end
 
   private

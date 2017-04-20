@@ -39,8 +39,7 @@ The schema and seed files can be found in the folder db/your_database.
 
 #### NOTE:
 If you already have models, migrations and a schema file, and want to manage that
-initial database with the multiple_dbs gem (recommended), you should create the database using
-the multiple_dbs_initializer generator and pass said database name as an argument. Check the install section for more information.
+initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the "How to start if already have a database ?"  section for more information.
 
 Finally copy the db/migration folder, schema and seed files to the
 db/your_default_db folder and use the --skip and --only options. These options are explained in the install section.
@@ -233,6 +232,42 @@ class YourModel < ConnectionBase
 end
 ```
 
+### How to start if already have a database ?.
+
+If you already have a database and want to replicate the entity relationship model in your new databases you can do the following:
+
+- Install the gem.
+- Run the multiple_dbs_initializer and configure your database connections.
+- If you want to copy the migrations from the default folder db/migrate into all your new databases, run in your terminal
+```bash
+$ rails "mdbs:replicate_default_database"
+```
+
+This command will copy your db/migrate folder into each of your databases folders, like db/your_database.
+
+- If you want to copy the migrations from the default folder db/migrate into an specific database, run in your terminal:
+```bash
+$ rails "mdbs:replicate_default_database_into[your_database]"
+```
+
+This command will copy your db/migrate folder into db/your_database
+
+- If you want to copy a specific migration from the default folder db/migrate into all your databases, run in your terminal:
+```bash
+$ rails "mdbs:copy_migration_from_default[file_name.rb]"
+```
+
+- If you want to copy a specific migration from the default folder db/migrate into an specific database, run in your terminal:
+```bash
+$ rails "mdbs:copy_migration_from_default_into[file_name.rb, database_name]"
+```
+
+- after you copy the migrations you want into the databases you want, migrate your databases, run in your terminal:
+```bash
+$ rails mdbs:migrate
+```
+
+
 ### Manage the databases
 multiple_dbs comes with a list of useful tasks that you can find in your project
 after the gem was installed.
@@ -281,6 +316,8 @@ Run in your terminal
 ```bash
 $ rake --tasks
 ```
+
+
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
