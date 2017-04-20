@@ -12,8 +12,8 @@ production:
   encoding: unicode #production_encoding
   pool: 5 #production_pool
   database: db3_production #production_database
-  username: fs20161 #production_username
-  password: fs20161pw #production_psw
+  username: root #production_username
+  password: toor #production_psw
 
 test:
   adapter: postgresql #test_adapter
