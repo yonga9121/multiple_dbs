@@ -10,8 +10,8 @@ Object.class_eval do
     matches = []
     db_matches = []
     MultipleDbs::DBS.each do |db|
-       matches << c.to_s.scan(
-        Regexp.new('(([A-Z]){1}([a-z]|[0-9])*)+' + db.to_s.capitalize + '$')
+      matches << c.to_s.scan(
+        Regexp.new('(([A-Z]){1}([a-zA-Z]|[0-9])*)+' + db.to_s.capitalize + '$')
       )
       db_matches << db
       break if matches.flatten.any?
