@@ -10,13 +10,13 @@ Object.class_eval do
     matches = []
     db_matches = []
     MultipleDbs::DBS.each do |db|
-      matches << c.to_s.scan(
+       matches << c.to_s.scan(
         Regexp.new('(([A-Z]){1}([a-z]|[0-9])*)+' + db.to_s.capitalize + '$')
       )
       db_matches << db
-      break if matches.any?
+      break if matches.flatten.any?
     end
-    const_temp = Object.const_get(matches.first).multiple_class(db_matches.first) if matches.flatten!.any?
+    const_temp = Object.const_get(matches.first).branch_class(db_matches.last) if matches.flatten!.any?
     return const_temp if matches.any? and const_temp.to_s.eql?(c.to_s)
     super
   end
