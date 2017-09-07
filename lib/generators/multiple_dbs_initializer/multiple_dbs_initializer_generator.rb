@@ -42,19 +42,16 @@ class MultipleDbsInitializerGenerator < Rails::Generators::Base
   def define_multiple_dbs_constant
     copy_file "initializer.rb", "config/initializers/multiple_dbs_initializer.rb"
     insert_into_file "config/initializers/multiple_dbs_initializer.rb",
-    %Q{\tDBS=#{databases.map{|db| db.to_s.underscore.to_sym}}\n}, after: "# Your databases.\n", verbose: false
-    insert_into_file "config/initializers/multiple_dbs_initializer.rb",
-    %Q{\t\tDBS.each do |db|
-      const_set(db.to_s.capitalize , Class.new do
-        attr_accessor :connection
-        @connection = YAML::load(ERB.new(File.read(Rails.root.join("config/multiple_dbs", db.to_s.downcase  + "_database.yml"))).result)[Rails.env]
-        def self.connection
-          @connection
-        end
-      end)
-    end\n},
-    after: "# DbConnection Constants.\n", verbose: false
+    %Q{\tDBS=#{databases.map{|db| db.to_s.underscore.to_sym}}
+      run_setup\n}, after: "# Your databases.\n", verbose: false
     remove_file "config/multiple_dbs", verbose: false
+    inject_into_class "app/controllers/application_controller.rb", ApplicationController,
+    %Q{\t\t# def mdb_name
+      #   Thread.current[:mdb_name] ||= ... somthing that gives you the database name, like: 'db1' or 'client1_database'
+      # end
+      # before_filter do
+      #   MultipleDbs.validate_connection(mdb_name)
+      # end\n}
     databases.each do |db|
       create_database_config_file db
     end

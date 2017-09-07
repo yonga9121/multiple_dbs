@@ -14,7 +14,8 @@ handled by it's own subclass, preventing switching between connections, which ad
 #### IMPORTANT.
 The following examples assume that you define 3 databases: db1, db2 and db3.
 
-Please read all this document, especially if your project is already running or
+Before you start, follow the installation instructions [here](https://github.com/yonga9121/multiple_dbs#installation) and please read all this
+document, especially if your project is already running or
 already has a database with migrations and stuff.
 
 ### Generate models.
@@ -39,7 +40,7 @@ The schema and seed files can be found in the folder db/your_database.
 
 #### NOTE:
 If you already have models, migrations and a schema file, and want to manage that
-initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the "How to start if already have a database ?"  section for more information.
+initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the ["How to start if already have a database ?"](https://github.com/yonga9121/multiple_dbs#how-to-start-if-already-have-a-database-) section for more information.
 
 If you DO NOT want to override the default database.yml file, add as an option
 --not_override=true
@@ -64,10 +65,26 @@ $ rails g multiple_dbs_migration add_column_password_to_users password:string --
 
 #### NOTE:
 If you already have models, migrations and a schema file, and want to manage that
-initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the "How to start if already have a database ?"  section for more information.
+initial database with the multiple_dbs gem (recommended), you should create the database using the multiple_dbs_initializer generator and pass said database name as an argument. Check the ["How to start if already have a database ?"](https://github.com/yonga9121/multiple_dbs#how-to-start-if-already-have-a-database-) section for more information.
 
 If you DO NOT want to override the default database.yml file, add as an option
 --not_override=true
+
+### Setting up your application_controller
+
+Add this tou your controller. Be sure to specify the database_name in the method mdb_name.
+
+This will turn on the connection to the specified database.
+
+```ruby
+ def mdb_name
+   Thread.current[:mdb_name] ||= nil # ...change this for somthing that gives you the database name, like: 'db1' or 'client1_database'. You can use the request headers or the params or from an object in the database or from the request domain...
+ end
+
+ before_filter do
+   MultipleDbs.validate_connection(mdb_name)
+ end
+```
 
 ### Setting up your models
 
@@ -134,23 +151,46 @@ Here, you associate the models between databases, by using classes PostDb1, Post
 
 You have two options for using a subclass that handles a connection.
 
-- 1. Using the raw constant
+- 1. Get the class from the base model
+
+  Use the model User to get the desired class.
+
+  ```ruby
+    user_class = User.multiple_class(:db1) # or User.mdb(:db1)
+    user_class.create(email: "someone@email.com")
+  ```
+  This is useful if your client sends you the database for data storage or transaction runs.
+
+- 2. Using the raw constant
+
+  Before you can use the raw constant you must be sure that the connection to the database is on.
+  You can do this using MultipleDbs.validate_connection(dat_name) passing the database name as a parameter.
 
   Use the UserDb1 class as usual
   ```ruby
     UserDb1.create(email: "someone@email.com")
   ```
 
-- 2. Get the class from the base model
+ - 3. Using classes from different connections
 
-  Use the model User to get the desired class.
-
+  In order to use different connections you must be sure that the connection from each database is on.
   ```ruby
-    user_class = User.multiple_class(:db1)
-    user_class.create(email: "someone@email.com")
-  ```
-  This is useful if your client sends you the database for data storage or transaction runs.
+  # somewhere in your code before you use the classes
 
+  MultipleDbs.validate_connection(:db1)
+  MultipleDbs.validate_connection(:db2)
+
+
+  # using the raw classes
+
+  puts UserDb1.first.inspect
+  puts UserDb2.first.inspect
+
+  # using the model to get the desired class
+
+  puts User.mdb(:db1).first.inspect
+  puts User.mdb(:db2).first.inspect
+  ```
 
 ## Installation
 
@@ -194,6 +234,8 @@ Run the help command for more information
 ```bash
 $ rails g multiple_dbs_initializer --help
 ```
+
+We just need one more thing... Read the section according to your rails version
 
 ### Rails >= 5.x.x
 

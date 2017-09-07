@@ -169,7 +169,11 @@ namespace :mdbs do
   task :drop do
       puts "Droping #{@dbs.join(',')}."
       @dbs.each do |db|
-        puts system("rake mdbs:#{db}:drop") ? "#{db} dropped" : "Error while dropping #{db}"
+        Rake::Task["mdbs:#{db}:drop"].invoke
+        Rake::Task["db:drop"].reenable
+        Rake::Task["db:load_config"].reenable
+        Rake::Task["db:drop:_unsafe"].reenable
+        puts "#{db} dropped"
       end
   end
   desc "create all dbs"
