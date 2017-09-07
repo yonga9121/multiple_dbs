@@ -78,7 +78,7 @@ This will turn on the connection to the specified database.
 
 ```ruby
  def mdb_name
-   Thread.current[:mdb_name] ||= nil # ...change this for somthing that gives you the database name, like: 'db1' or 'client1_database'. You can use the request headers or the params or from an object in the database or from the request domain...
+   Thread.current[:mdb_name] ||= nil # ...change this for somthing that gives you the database name, like: 'db1' or 'client1_database'. You can use the request headers or the params or an object in the database or the request domain...
  end
 
  before_filter do
