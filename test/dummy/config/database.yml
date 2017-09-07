@@ -1,24 +1,24 @@
 
 development:
-  adapter: postgresql postgresql postgresql #development_adapter
-  encoding: unicode unicode unicode #development_encoding
-  pool: 5 5 5 #development_pool
-  database: db1_development db1_development db1_development #development_database
-  password: fs20161pw fs20161pw fs20161pw #development_psw
-  username: fs20161 fs20161 fs20161 #development_username
+  adapter: postgresql #development_adapter
+  encoding: unicode #development_encoding
+  pool: 5 #development_pool
+  database: db1_development #development_database
+  password: fs20161pw #development_psw
+  username: fs20161 #development_username
 
 production:
-  adapter: postgresql postgresql postgresql #production_adapter
-  encoding: unicode unicode unicode #production_encoding
-  pool: 5 5 5 #production_pool
-  database: db1_production db1_production db1_production #production_database
-  username: fs20161 root root #production_username
-  password: fs20161pw toor toor #production_psw
+  adapter: postgresql #production_adapter
+  encoding: unicode #production_encoding
+  pool: 5 #production_pool
+  database: db1_production #production_database
+  username: root #production_username
+  password: toor #production_psw
 
 test:
-  adapter: postgresql postgresql postgresql #test_adapter
-  encoding: unicode unicode unicode #test_encoding
-  pool: 5 5 5 #test_pool
-  database: db1_test db1_test db1_test #test_database
-  username: fs20161 fs20161 fs20161 #test_username
-  password: fs20161pw fs20161pw fs20161pw #test_psw
+  adapter: postgresql #test_adapter
+  encoding: unicode #test_encoding
+  pool: 5 #test_pool
+  database: db1_test #test_database
+  username: fs20161 #test_username
+  password: fs20161pw #test_psw
