@@ -249,23 +249,6 @@ class ApplicationRecord < ActiveRecord::Base
 end
 
 ```
-### Rails >= 4.x.x < 5.x.x
-You can create a class and make the models inherit from it, like this.
-```ruby
-# app/models/connection_base.rb
-class ConnectionBase < ActiveRecord::Base
-  include MultipleDbs::MultiConnectable
-  self.abstract_class = true
-end
-```
-
-And make your models inherit from that class.
-```ruby
-# app/models/your_model.rb
-class YourModel < ConnectionBase
-  # awesome code
-end
-```
 
 ### How to start if already have a database ?.
 
