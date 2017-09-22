@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = MultipleDbs::VERSION
   s.authors     = ["Yonga9121"]
   s.email       = ["jorgeggayon@gmail.com"]
-  s.homepage    = "https://github.com/yonga9121/multiple_dbs.git"
+  s.homepage    = "https://yonga9121.github.io/multiple_dbs/"
   s.summary     = "Management of multiple databases."
   s.description = "Management of multiple databases."
   s.license     = "MIT"
